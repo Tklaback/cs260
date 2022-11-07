@@ -27,10 +27,11 @@ app.get('/api/cart/:id', (req, res) => {
 })
 
 app.post('/api/cart/:id', (req, res) => {
+    console.log("CART ITEM POSTED!")
     let ids = cartItems.map((el) => {
         return el.id;
     })
-    let pos = ids.indexOf(req.params.id);
+    let pos = ids.indexOf(parseInt(req.params.id));
     if (pos === -1){
         let object = {
             id: parseInt(req.params.id),
@@ -49,24 +50,27 @@ app.put('/api/cart/:id/:quantity', (req, res) => {
     let ids = cartItems.map((el) => {
         return el.id;
     })
-    let pos = ids.indexOf(req.params.id);
+    let pos = ids.indexOf(parseInt(req.params.id));
+    console.log(ids);
     if (pos === -1){
         res.status(404).send("ERROR in put");
     }
     else if (req.params.quantity == 0){
-        cartItems[pos].quantity = req.params.quantity;
+        cartItems[pos].quantity = 0;
         let temp = cartItems[pos];
         cartItems.splice(pos, 1);
         res.status(200).send(temp);
     }
     else{
-        cartItems[pos].quantity = req.params.quantity;
+        cartItems[pos].quantity = parseInt(req.params.quantity);
         res.status(200).send(cartItems[pos]);
     }
 })
 
 app.delete('/api/cart/:id', (req, res) => {
-    cartItems = cartItems.filter(obj => obj.id != req.params.id)
+    let found = cartItems.find((el) => el.id == parseInt(req.params.id))
+    console.log(found);
+    cartItems = cartItems.filter(obj => obj.id != parseInt(req.params.id))
     res.status(200).send(cartItems);
 })
 

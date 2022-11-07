@@ -39,7 +39,7 @@ describe("getting, adding, and deleting items from the cart", () => {
     });
     test("check item in cart", async () => {
         const response = await axios.get(`${baseURL}/api/cart/`);
-        const item = response.data.find((item) => (item.id = productID));
+        const item = response.data.find((item) => (item.id == productID));
         expect(response.status).toBe(200);
         expect(item.id).toEqual(productID);
         expect(item.quantity).toEqual(5);

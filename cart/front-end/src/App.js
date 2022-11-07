@@ -1,22 +1,52 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Product from './Product.js';
+import Error from './Error.js';
 
 function App() {
-  const [apiResponse, setApiResponse] = useState('');
-  const [textVal, setTextVal] = useState('');
-  function handleSubmit(e){
-    e.preventDefault();
-    axios.post('/api/products', {name: "ty", price: "45"})
-    .then(response => {
-      console.log(response.data);
-    })
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState('');
+  const [cart, setCart] = useState([]);
+  const [update, setUpdate] = useState(false);
+
+  const fetchProducts = async() => {
+    try{
+      const response = await axios.get("/api/products");
+      const arr = response.data;
+      arr.sort((a, b) => {return a.name > b.name});
+      setProducts(arr);
+    } catch(err){
+      setError(err);
+    }
   }
+  
+  const fetchCart = async() => {
+    try{
+      const response = await axios.get("/api/cart");
+      setCart(response.data);
+      // setUpdate(false);
+    }catch(error){
+      setError(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchProducts();
+  },[]);
+
+  useEffect(() => {
+    fetchCart();
+  }, [update])
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <input value={textVal} onChange={(e)=>{setTextVal(e.target.value)}} />
-      </form>
+      <Error error={error}/>
+      <h1>Products</h1>
+      {products.map((element) => {
+        return (
+          <Product key={element.id} setUpdate={setUpdate} object={element} setError={setError} setCart={setCart}/>
+        )
+      })}
     </>
   );
 }
