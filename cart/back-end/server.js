@@ -51,7 +51,6 @@ app.put('/api/cart/:id/:quantity', (req, res) => {
         return el.id;
     })
     let pos = ids.indexOf(parseInt(req.params.id));
-    console.log(ids);
     if (pos === -1){
         res.status(404).send("ERROR in put");
     }
