@@ -3,6 +3,7 @@ import axios from 'axios';
 import Product from './Product.js';
 import Cart from './Cart.js'
 import Error from './Error.js';
+import "./styles.css";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -40,16 +41,20 @@ function App() {
   }, [update])
 
   return (
-    <div>
+    <div className='main-section'>
       <Error error={error}/>
+      <div className='products'>
       <h2>Products</h2>
-      {products.map((element) => {
-        return (
-          <Product key={element.id} object={element} setUpdate={setUpdate} setError={setError} update={update}/>
-        )
-      })}
-      <h2>Cart</h2>
-      <Cart arr={cart} products={products} />
+        {products.map((element) => {
+          return (
+            <Product key={element.id} object={element} setUpdate={setUpdate} setError={setError} update={update}/>
+          )
+        })}
+      </div>
+      <div className='cart'>
+        <h2>Cart</h2>
+        <Cart arr={cart} products={products} setUpdate={setUpdate} setError={setError} update={update}/>
+      </div>
     </div>
   );
 }

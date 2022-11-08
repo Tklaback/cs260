@@ -1,4 +1,5 @@
 import axios from 'axios';
+import './styles.css';
 
 export default function Product(props){
     const addToCart = async(id) => {
@@ -11,7 +12,7 @@ export default function Product(props){
     }
 
     return (
-        <div style={{width: "25%", display: 'flex', justifyContent: 'space-between'}}>
+        <div className='product'>
             <p>{props.object.name} -- {props.object.price}</p>
             <button onClick={(e) => {addToCart(props.object.id)}}>Add to cart</button>
         </div>
