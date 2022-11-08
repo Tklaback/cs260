@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Product from './Product.js';
+import Cart from './Cart.js'
 import Error from './Error.js';
 
 function App() {
@@ -13,8 +14,8 @@ function App() {
     try{
       const response = await axios.get("/api/products");
       const arr = response.data;
-      arr.sort((a, b) => {return a.name > b.name});
-      setProducts(arr);
+      let sortedArr = [...arr].sort((a, b) => {return a.name > b.name});
+      setProducts(sortedArr);
     } catch(err){
       setError(err);
     }
@@ -23,8 +24,8 @@ function App() {
   const fetchCart = async() => {
     try{
       const response = await axios.get("/api/cart");
-      setCart(response.data);
-      // setUpdate(false);
+      const arr = (response.data);
+      setCart(arr);
     }catch(error){
       setError(error);
     }
@@ -39,15 +40,17 @@ function App() {
   }, [update])
 
   return (
-    <>
+    <div>
       <Error error={error}/>
-      <h1>Products</h1>
+      <h2>Products</h2>
       {products.map((element) => {
         return (
-          <Product key={element.id} setUpdate={setUpdate} object={element} setError={setError} setCart={setCart}/>
+          <Product key={element.id} object={element} setUpdate={setUpdate} setError={setError} update={update}/>
         )
       })}
-    </>
+      <h2>Cart</h2>
+      <Cart arr={cart} products={products} />
+    </div>
   );
 }
 

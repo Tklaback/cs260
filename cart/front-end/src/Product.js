@@ -1,11 +1,10 @@
 import axios from 'axios';
 
 export default function Product(props){
-    const addToCart = async() => {
+    const addToCart = async(id) => {
         try{
-            const response = axios.post(`/api/cart/${props.object.id}`);
-            props.setCart(response.data)
-            props.setUpdate(true);
+            await axios.post(`/api/cart/${id}`);
+            props.setUpdate(!props.update);
         }catch(error){
             props.setError(error);
         }
@@ -14,7 +13,7 @@ export default function Product(props){
     return (
         <div style={{width: "25%", display: 'flex', justifyContent: 'space-between'}}>
             <p>{props.object.name} -- {props.object.price}</p>
-            <button onClick={(e) => {addToCart();}}>Add to cart</button>
+            <button onClick={(e) => {addToCart(props.object.id)}}>Add to cart</button>
         </div>
     )
 }

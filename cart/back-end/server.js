@@ -27,7 +27,6 @@ app.get('/api/cart/:id', (req, res) => {
 })
 
 app.post('/api/cart/:id', (req, res) => {
-    console.log("CART ITEM POSTED!")
     let ids = cartItems.map((el) => {
         return el.id;
     })
@@ -44,6 +43,7 @@ app.post('/api/cart/:id', (req, res) => {
         cartItems[pos].quantity++;
         res.status(200).send(cartItems[pos]);
     }
+    console.log("CART ITEM POSTED!", cartItems);
 });
 
 app.put('/api/cart/:id/:quantity', (req, res) => {
