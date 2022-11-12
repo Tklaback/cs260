@@ -17,12 +17,13 @@ const userSchema = new mongoose.Schema({
     name: String,
     phoneNumber: String,
     email: String,
+    password: String
 });
 
 userSchema.virtual('id')
-    .get(function() {
-        return this._id.toHexString();
-    });
+.get(function() {
+    return this._id.toHexString();
+});
 
 userSchema.set('toJSON', {
     virtuals: true
@@ -31,22 +32,39 @@ userSchema.set('toJSON', {
 const User = mongoose.model('User', userSchema)
 
 app.get('/api/users', async (req, res) => {
-    
     const db = await User.find();
     res.send(db);
 });
 
-app.get('/api/user/:id', (req, res) => {
-
+app.get('/api/user', (req, res) => {
+    User.find({email: req.query.email}, (error, data) => {
+        if (error){
+            console.log("NOT FOUND!");
+            res.sendStatus(500)
+        }
+        else{
+            if (data.length !== 0){
+                if (data[0].password && req.query.password === data[0].password){
+                    res.send(true);
+                    return;
+                }
+            }
+            res.send(false);
+        }
+    });
 })
 
 app.post('/api/user', async (req, res) => {
     const newUser = new User({
         name: req.body.name,
         phoneNumber: req.body.phoneNumber,
-        email: req.body.email
+        email: req.body.email,
+        password: req.body.password
     })
     try{
+        if (!newUser.name || !newUser.phoneNumber || !newUser.email || !newUser.password){
+            res.send(false);
+        }
         await newUser.save();
         res.send(newUser);
     }catch(error){
