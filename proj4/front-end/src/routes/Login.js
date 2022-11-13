@@ -18,7 +18,7 @@ export default function Login(props){
         }
         try{
             const response = await axios.get(`/api/user`, {params: obj});
-            if (response.data.length){
+            if (response.data){
                 props.setUser(response.data[0]);
                 navigate("/homePage");
             }

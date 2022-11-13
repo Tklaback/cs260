@@ -25,7 +25,8 @@ export default function CreateUser(){
                 name: titleCase(first) + ' ' + titleCase(last),
                 email: email,
                 phoneNumber: phone,
-                password: pwd
+                password: pwd,
+                message: '',
             }
             await axios.post('/api/user', newUser);
             setEmail('');

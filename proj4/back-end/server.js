@@ -17,7 +17,8 @@ const userSchema = new mongoose.Schema({
     name: String,
     phoneNumber: String,
     email: String,
-    password: String
+    password: String,
+    message: String,
 });
 
 userSchema.virtual('id')
@@ -36,6 +37,22 @@ app.get('/api/users', async (req, res) => {
     res.send(db);
 });
 
+app.get('/api/user/:id', (req, res) => {
+    try {
+        User.find({_id: req.params.id}, (error, data) => {
+            if (error){
+                console.log("not found!")
+            }else{
+                res.send(data);
+                return;
+            }
+        })
+    }catch(error){
+        console.log("HERE")
+        res.sendStatus(400);
+    }
+})
+
 app.get('/api/user', (req, res) => {
     User.find({email: req.query.email}, (error, data) => {
         if (error){
@@ -49,7 +66,7 @@ app.get('/api/user', (req, res) => {
                     return;
                 }
             }
-            res.send(data);
+            res.send(false);
         }
     });
 })
@@ -64,11 +81,23 @@ app.post('/api/user', async (req, res) => {
     try{
         if (!newUser.name || !newUser.phoneNumber || !newUser.email || !newUser.password){
             res.send(false);
+            return
         }
         await newUser.save();
         res.send(newUser);
     }catch(error){
         console.log("OH NO! from server")
+        res.sendStatus(400);
+    }
+})
+
+app.put('/api/user/messageField', async (req, res) => {
+    try {
+        const result = await User.findOneAndUpdate({_id: req.body._id},{message: req.body.message});
+        console.log(result.message);
+        res.send(result.message);
+    }catch (error){
+        console.log("HERE!");
         res.sendStatus(400);
     }
 })

@@ -13,9 +13,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/createUser' element={<CreateUser />} />
-        <Route index path='/' element={<Login setUser={setUser}/>} />
-        <Route path="/homePage" element={<UserHome curUser={curUser}/>} />
+        <Route path='/createUser' element={<CreateUser/>} />
+        <Route index path='/' element={<Login curUser={curUser} setUser={setUser}/>} />
+        <Route path="/homePage" element={<UserHome setUser={setUser} curUser={curUser} />} />
       </Routes>
     </Router>
   );
