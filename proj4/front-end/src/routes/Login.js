@@ -29,11 +29,11 @@ export default function Login(props){
         }
     }
     return (
-        <div>
-            <form onSubmit={setLogin}>
+        <div className="page">
+            <form className="form" onSubmit={setLogin}>
                 <title>Login</title>
                 <input placeholder="email" onChange={(e) => setEmail(e.target.value)} value={usrEmail}></input>
-                <input placeholder="password" onChange={(e) => setPwd(e.target.value)} value={pwd}></input>
+                <input placeholder="password" type="password" onChange={(e) => setPwd(e.target.value)} value={pwd}></input>
                 <button>SUBMIT</button>
             </form>
             <Link to="/createUser">Create User</Link>

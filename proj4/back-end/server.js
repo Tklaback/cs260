@@ -81,7 +81,7 @@ app.post('/api/user', async (req, res) => {
     try{
         if (!newUser.name || !newUser.phoneNumber || !newUser.email || !newUser.password){
             res.send(false);
-            return
+            return;
         }
         await newUser.save();
         res.send(newUser);
@@ -102,11 +102,14 @@ app.put('/api/user/messageField', async (req, res) => {
     }
 })
 
-app.delete('api/user/:id', (req, res) => {
-    console.log(req.params.id);
-    // const found = await User.findById( req.params.id );
-    // await User.deleteOne({ _id: req.body.id });
-    res.send(found);
+app.delete('api/user/:id', async (req, res) => {
+    try{
+        const result = await User.deleteOne({ _id: req.params.id });
+        console.log("delete!")
+        res.send(result);
+    }catch(error){
+        console.log("delete!")
+    }
 })
 
 app.delete('/api/users', async (req, res) => {

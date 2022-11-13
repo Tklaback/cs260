@@ -4,9 +4,20 @@ import axios from "axios";
 
 export default function UserHome(props){
     const location = useLocation();
+    const navigate = useNavigate();
     const [message, setMessage] = useState('');
     const [edit, setEdit] = useState(true);
     
+    async function deleteAcc(){
+        try{
+            console.log("DELETING")
+            await axios.delete(`/api/user/${props.curUser.id}`);
+            navigate('/');
+        }catch(error){
+
+        }
+    }
+
     async function updateMessageDB(){
         try{
             const response = await axios.put("/api/user/messageField", {_id: props.curUser.id, message: message});
@@ -34,14 +45,17 @@ export default function UserHome(props){
     //if (!edit) updateMessageDB()
     return (
         <div>
-            <h1>Welcome back {props.curUser.name}!</h1>
             <div>
                 {edit ? (
-                    <div>
+                    <div className="page">
+                        <button onClick={(e)=>deleteAcc()}>DELETE ACCOUNT</button>
+                        <h1>Welcome back {props.curUser.name}!</h1>
                         <p>{message}</p>
                         <button onClick={(e) => {setEdit(!edit)}}>Edit</button>
                     </div>
-                ) : (<div>
+                ) : (<div className="page">
+                        <button onClick={(e)=>deleteAcc()}>DELETE ACCOUNT</button>
+                        <h1>Welcome back {props.curUser.name}!</h1>
                         <textarea value={message} onChange={(e) => setMessage(e.target.value)}>{message}</textarea>
                         <button onClick={(e)=>{updateMessageDB(); setEdit(!edit)}}>Save</button>
                     </div>
