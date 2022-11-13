@@ -3,9 +3,13 @@ import {
   } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
-export default function Login(){
+import { useNavigate } from 'react-router-dom';
+
+export default function Login(props){
     const [usrEmail, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
+    const navigate = useNavigate();
+
     const setLogin = async(e) => {
         e.preventDefault();
         let obj={
@@ -14,7 +18,10 @@ export default function Login(){
         }
         try{
             const response = await axios.get(`/api/user`, {params: obj});
-            console.log(response.data);
+            if (response.data.length){
+                props.setUser(response.data[0]);
+                navigate("/homePage");
+            }
             setEmail('');
             setPwd('');
         }catch(error){

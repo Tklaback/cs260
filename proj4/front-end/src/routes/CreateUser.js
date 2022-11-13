@@ -3,6 +3,7 @@ import {
 } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function CreateUser(){
     const [email, setEmail] = useState('');
@@ -11,17 +12,28 @@ export default function CreateUser(){
     const [first, setFirst] = useState('');
     const [last, setLast] = useState('');
 
+    const navigate = useNavigate();
+
+    function titleCase(str){
+        return str[0].toUpperCase() + str.substring(1, str.length);
+    }
+
     async function initUser(e){
         e.preventDefault();
-        console.log(first, last, email, pwd, phone)
         try{
             const newUser={
-                name: first + last,
+                name: titleCase(first) + ' ' + titleCase(last),
                 email: email,
                 phoneNumber: phone,
                 password: pwd
             }
             await axios.post('/api/user', newUser);
+            setEmail('');
+            setFirst('');
+            setLast('');
+            setPwd('');
+            setPhone('');
+            navigate('/');
         }catch(error){
             
         }
@@ -37,7 +49,7 @@ export default function CreateUser(){
                 <input placeholder="Last Name" onChange={(e)=>setLast(e.target.value)} value={last}></input>
                 <button>SUBMIT</button>
             </form>
-            <Link to="/login">Login</Link>
+            <Link to="/">Login</Link>
         </div>
     )
 }

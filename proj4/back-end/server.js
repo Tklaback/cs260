@@ -45,11 +45,11 @@ app.get('/api/user', (req, res) => {
         else{
             if (data.length !== 0){
                 if (data[0].password && req.query.password === data[0].password){
-                    res.send(true);
+                    res.send(data);
                     return;
                 }
             }
-            res.send(false);
+            res.send(data);
         }
     });
 })
