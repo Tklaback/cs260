@@ -10,8 +10,7 @@ export default function UserHome(props){
     
     async function deleteAcc(){
         try{
-            console.log("DELETING")
-            await axios.delete(`/api/user/${props.curUser.id}`);
+            const response = await axios.delete(`/api/user/${props.curUser.id}`);
             navigate('/');
         }catch(error){
 

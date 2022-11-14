@@ -94,7 +94,6 @@ app.post('/api/user', async (req, res) => {
 app.put('/api/user/messageField', async (req, res) => {
     try {
         const result = await User.findOneAndUpdate({_id: req.body._id},{message: req.body.message});
-        console.log(result.message);
         res.send(result.message);
     }catch (error){
         console.log("HERE!");
@@ -102,13 +101,13 @@ app.put('/api/user/messageField', async (req, res) => {
     }
 })
 
-app.delete('api/user/:id', async (req, res) => {
+app.delete('/api/user/:id',  async (req, res) => {
+    console.log(req.params.id);
     try{
-        const result = await User.deleteOne({ _id: req.params.id });
-        console.log("delete!")
+        const result = await User.deleteOne({_id: req.params.id})
         res.send(result);
     }catch(error){
-        console.log("delete!")
+        console.log("DELETE DID NOT WORK!")
     }
 })
 
