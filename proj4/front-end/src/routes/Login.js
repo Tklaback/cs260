@@ -4,6 +4,7 @@ import {
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import "./styles.css";
 
 export default function Login(props){
     const [usrEmail, setEmail] = useState('');
@@ -30,13 +31,16 @@ export default function Login(props){
     }
     return (
         <div className="page">
-            <form className="form" onSubmit={setLogin}>
-                <title>Login</title>
-                <input placeholder="email" onChange={(e) => setEmail(e.target.value)} value={usrEmail}></input>
-                <input placeholder="password" type="password" onChange={(e) => setPwd(e.target.value)} value={pwd}></input>
-                <button>SUBMIT</button>
-            </form>
-            <Link to="/createUser">Create User</Link>
+            <h1>Login to your account</h1>
+            <div className="form">
+                <form className="fields" onSubmit={setLogin}>
+                    <title>Login</title>
+                    <input className="txt-field" placeholder="email" onChange={(e) => setEmail(e.target.value)} value={usrEmail}></input>
+                    <input className="txt-field" placeholder="password" type="password" onChange={(e) => setPwd(e.target.value)} value={pwd}></input>
+                    <button className="btn">SUBMIT</button>
+                </form>
+                <Link to="/createUser">Create User</Link>
+            </div>
         </div>
     )
 }

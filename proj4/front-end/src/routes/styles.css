@@ -1,12 +1,67 @@
+/*HEX: #cfe0e8*/
+
+/*HEX: #b7d7e8*/
+
+/*HEX: #87bdd8*/
+
+/*HEX: #daebe8*/
+*{
+    background-color: #b7d7e8;
+}
+
+
 .page {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
-.form {
+.form{
+    display: flex;
+    flex-direction: column;
+    background-color: #87bdd8;
+}
+
+.fields {
+    align-items: center;
+    justify-content: center;
+    width: 500px;
+    height: 300px;
+    background-color: #87bdd8;
     margin-top: 50px;
     display: flex;
     flex-direction: column;
-    width: 200px;
+    /*justify-content: space-between;*/
+    align-items: center;
 }
+
+.txt-field{
+    margin: 0 0 10px 0;
+    border: 2px solid #daebe8;
+    font-size: 20px;
+    height: 40px;
+    outline: none;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #cfe0e8;
+}
+
+.link {
+    align-self: start;
+    
+}
+
+.btn {
+    background-color: #daebe8;
+    width: 100px;
+    height: 45px;
+    border: 1px solid #b7d7e8;
+    color: gray;
+}
+
+.btn:hover{
+    cursor: pointer;
+    background-color: #cfe0e8;
+}
+
