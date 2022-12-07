@@ -1,5 +1,6 @@
 const express = require('express')
 const { set } = require('../database/models/personalInfo')
+const { findById } = require('../database/models/user')
 const router = express.Router()
 const User = require('../database/models/user')
 const passport = require('../passport')
@@ -23,7 +24,7 @@ router.post('/signup', (req, res, err) => {
                 lastName: '',
                 phone: '',
                 bio: '',
-                friends: []
+                friends: [],
             })
             newUser.save((error, savedUser) => {
                 if (error) return res.json(error);
@@ -86,12 +87,43 @@ router.delete('/', async (req, res, err) => {
 
 router.get('/users', async (req, res, err) => {
     try{
-        const response = await User.find();
+        const response = await User.find({username:{ $nin: req.query.username}});
         res.send(response);
     }catch(error){
         console.log(error);
     }
     
+})
+
+router.put('/friend', async (req, res, err) => {
+    const { _id, friendId } = req.body;
+    try{
+        const friend = await User.findById(friendId);
+        const user = await User.findOneAndUpdate({_id : _id}, {$addToSet : {friends : friend}})
+        res.send(user);
+    }catch(error){
+        console.log("Couldn't add friend")
+    }   
+})
+
+router.get('/friends', async (req, res, err) => {
+    try{
+        const friends = await User.findOne({username: req.query.username}, {friends: 1});
+        res.send(friends);
+    }catch(error){
+
+    }
+})
+
+router.delete('/friend', async (req, res, err) => {
+    const { username, friendUserName } = req.body;
+    try{
+        await User.findOneAndUpdate({username : username}, {$pull : {friends : { username: friendUserName}}});
+        const friends = await User.findOne({username: username}, {friends: 1});
+        res.send(friends);
+    }catch(error){
+        console.log("COULDNT REMOVE FRIEND")
+    }
 })
 
 module.exports = router;

@@ -8,7 +8,7 @@ export default function Users(props){
     useEffect(()=> {
         async function fetchData(){
             try {
-                const response = await axios.get('/user/users');
+                const response = await axios.get('/user/users', {params: {username: props.currentUser.username}});
                 setUsers(response.data);
             }catch(error){
                 console.log("DIDNT work");
@@ -17,8 +17,26 @@ export default function Users(props){
         fetchData();
     }, [])
 
-    const addFriend = (friend) => {
-        
+    const addFriend = async (friend) => {
+        try{
+            const response = await axios.put('/user/friend', {
+                _id: props.currentUser._id, 
+                friendId: friend._id,
+            })
+            props.setUpdate(!props.update);
+            console.log(response.data);
+        }catch(error){
+            console.log("Add friend didn't work");
+        }
+    }
+
+    function inFriends(username){
+        for (let friendObject of props.friends){
+            if(friendObject.username === username){
+                return true;
+            }
+        }
+        return false;
     }
 
     return (
@@ -26,8 +44,12 @@ export default function Users(props){
             <input onChange={(e) => setSearch(e.target.value)} value={search} placeholder="search users"/>
             {users && users.filter(word => word.username.includes(search)).map((el) => (
                 <div key={el._id}>
-                    <button onClick={(e) => addFriend(el)}>add</button>
-                    <p >{el.username}</p>
+                    {!inFriends(el.username) &&
+                    <>
+                        <button onClick={(e) => addFriend(el)}>add</button>
+                        <p >{el.username}</p>
+                    </>
+                    }
                 </div >
             ))}
         </div>

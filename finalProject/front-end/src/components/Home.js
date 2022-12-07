@@ -3,8 +3,11 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import '../styles/home.css';
 import Users from "./Users";
+import Friends from "./Friends";
 
 export default function Home(props){
+    const [updateFriends, setUpdateFriends] = useState(false);
+    const [friends, setFriends] = useState([]);
     var userObject = props.currentUser;
     const navigate = useNavigate();
     if (typeof(userObject) == 'string'){
@@ -36,7 +39,20 @@ export default function Home(props){
                     <Link to="/edit">Edit</Link>
                     <button onClick={deleteAccount}>delete account</button>
                 </div>
-                <Users currentUser={props.currentUser}/>
+                <Friends 
+                    update={updateFriends} 
+                    setUpdate={setUpdateFriends} 
+                    currentUser={userObject}
+                    friends={friends}
+                    setFriends={setFriends}
+                />
+                <Users 
+                    update={updateFriends} 
+                    setUpdate={setUpdateFriends} 
+                    currentUser={userObject}
+                    friends={friends}
+                    setFriends={setFriends}
+                />
             </div>
         )
     }

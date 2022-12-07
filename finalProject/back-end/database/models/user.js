@@ -12,6 +12,7 @@ const userSchema = new Schema({
 	bio: { type: String, unique: false, required: false},
 	firstName: { type: String, unique: false, required: false},
 	lastName: { type: String, unique: false, required: false},
+	friends: { type: Array, unique: false, required: false},
 })
 
 userSchema.methods = {
