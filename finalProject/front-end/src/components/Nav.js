@@ -11,19 +11,20 @@ export default function Nav(props){
 
     return (
         <>
-            <Link to="/">Home</Link>
-            {!props.isLoggedIn && (
-                <>
-                    <Link to="/signup">Sign up</Link>
-                    <Link to="/signin">Sign In</Link>
-                </>
-            )}
-            {props.isLoggedIn && (
-                <>
-                    <button onClick={onSignout}>Sign out</button>
-                </>
-            )}
-            
+            <div className="nav-bar">
+                <Link to="/">Home</Link>
+                {!props.isLoggedIn && (
+                    <>
+                        <Link to="/signup">Sign up</Link>
+                        <Link to="/signin">Sign In</Link>
+                    </>
+                )}
+                {props.isLoggedIn && (
+                    <>
+                        <button onClick={onSignout}>Sign out</button>
+                    </>
+                )}
+            </div>
         </>
     )
 }
