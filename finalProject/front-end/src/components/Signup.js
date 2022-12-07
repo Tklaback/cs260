@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 
-export default function Signup(){
+export default function Signup(props){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [redirect, setRedirect] = useState(null);
     
     async function submit(e){
         e.preventDefault();
@@ -17,6 +19,9 @@ export default function Signup(){
             console.log("Shoot, that didn't work!")
         }
         
+    }
+    if (redirect){
+        return <Navigate to={{pathname: redirect}} />
     }
     
     return (

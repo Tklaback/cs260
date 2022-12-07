@@ -1,0 +1,12 @@
+.main{
+    border: 1px solid red;
+    display: flex;
+    justify-content: space-between;
+}
+
+.users{
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    overflow-y: scroll;
+}

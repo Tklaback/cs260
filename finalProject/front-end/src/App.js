@@ -23,7 +23,7 @@ function App() {
           />
           <Route 
             path="/signup" 
-            element={<Signup setUser={setCurrentUser}/>}
+            element={<Signup logIn={setIsLoggedIn} setUser={setCurrentUser}/>}
           />
           <Route 
             path="/signin" 
@@ -31,7 +31,7 @@ function App() {
           />
           <Route 
             path="/edit" 
-            element={<Edit currentUser={currentUser}/>}
+            element={<Edit setCurrentUser={setCurrentUser} currentUser={currentUser}/>}
           />
         </Routes>
       </BrowserRouter>

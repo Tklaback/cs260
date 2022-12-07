@@ -23,6 +23,7 @@ router.post('/signup', (req, res, err) => {
                 lastName: '',
                 phone: '',
                 bio: '',
+                friends: []
             })
             newUser.save((error, savedUser) => {
                 if (error) return res.json(error);
@@ -49,16 +50,26 @@ router.get('/signin', (req, res, err) => {
     })
 })
 
-router.put('/edit', (req, res, err) => {
-    const { username, email } = req.body;
-    User.findOne({username: username}, (err, user) => {
-        if (err){
-
-        }
-        else if (user){
-            console.log(user)
-        }
-    })
+router.put('/edit', async (req, res, err) => {
+    const { _id, email, bio, firstName, lastName, phone } = req.body;
+    try{
+        await User.findOneAndUpdate({_id : _id}, {$set : 
+            {
+                email : email,
+                firstName: firstName,
+                lastName: lastName,
+                bio: bio,
+                phone: phone,
+            }
+        });
+        const response = await User.findById({_id: _id})
+        res.send(response);
+    }catch(error){
+        console.log("DID NOT WORK")
+    }
+    
+        
+    
 })
 
 router.delete('/', async (req, res, err) => {
