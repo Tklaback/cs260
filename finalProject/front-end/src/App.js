@@ -15,11 +15,11 @@ function App() {
   return (
     <div >
       <BrowserRouter>
-        <Nav />
+        <Nav setLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn}/>
         <Routes>
           <Route 
             exact path="/" 
-            element={<Home loggedIn={isLoggedIn} currentUser={currentUser} />}
+            element={<Home setLoggedIn={setIsLoggedIn} loggedIn={isLoggedIn} currentUser={currentUser} />}
           />
           <Route 
             path="/signup" 

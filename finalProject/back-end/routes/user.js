@@ -18,6 +18,11 @@ router.post('/signup', (req, res, err) => {
             const newUser = new User({
                 username: username,
                 password: password,
+                email: '',
+                firstName: '',
+                lastName: '',
+                phone: '',
+                bio: '',
             })
             newUser.save((error, savedUser) => {
                 if (error) return res.json(error);
@@ -46,7 +51,36 @@ router.get('/signin', (req, res, err) => {
 
 router.put('/edit', (req, res, err) => {
     const { username, email } = req.body;
-    User.updateOne({username: username}, {$set : {email : email}})
+    User.findOne({username: username}, (err, user) => {
+        if (err){
+
+        }
+        else if (user){
+            console.log(user)
+        }
+    })
+})
+
+router.delete('/', async (req, res, err) => {
+    const { username } = req.body;
+    try{
+        const response = await User.deleteOne({"username" : username});
+        res.send(response);
+    }catch(error){
+        console.log("Delete did not work");
+    }
+    
+    
+})
+
+router.get('/users', async (req, res, err) => {
+    try{
+        const response = await User.find();
+        res.send(response);
+    }catch(error){
+        console.log(error);
+    }
+    
 })
 
 module.exports = router;

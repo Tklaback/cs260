@@ -10,7 +10,8 @@ const userSchema = new Schema({
 	email: { type: String, unique: false, required: false},
 	phone: { type: String, unique: false, required: false},
 	bio: { type: String, unique: false, required: false},
-	
+	firstName: { type: String, unique: false, required: false},
+	lastName: { type: String, unique: false, required: false},
 })
 
 userSchema.methods = {

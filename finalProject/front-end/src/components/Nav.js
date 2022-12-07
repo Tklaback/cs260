@@ -1,11 +1,29 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Nav(props){
+    const navigate = useNavigate();
+    const onSignout = (e) => {
+        e.preventDefault();
+        localStorage.clear();
+        props.setLoggedIn(false);
+        navigate('/');
+    }
+
     return (
         <>
             <Link to="/">Home</Link>
-            <Link to="/signup">Sign up</Link>
-            <Link to="/signin">Sign In</Link>
+            {!props.isLoggedIn && (
+                <>
+                    <Link to="/signup">Sign up</Link>
+                    <Link to="/signin">Sign In</Link>
+                </>
+            )}
+            {props.isLoggedIn && (
+                <>
+                    <button onClick={onSignout}>Sign out</button>
+                </>
+            )}
+            
         </>
     )
 }
