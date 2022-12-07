@@ -15,7 +15,9 @@ export default function Signin(props){
                 username: username,
                 password: password
             }});
-            if (response.data === true){
+            if (!response.data.error){
+                localStorage.setItem('user', JSON.stringify(response.data))
+                props.setUser(response.data);
                 props.logIn(true);
                 setRedirect('/');
             }

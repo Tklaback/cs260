@@ -1,4 +1,5 @@
 const express = require('express')
+const { set } = require('../database/models/personalInfo')
 const router = express.Router()
 const User = require('../database/models/user')
 const passport = require('../passport')
@@ -33,7 +34,7 @@ router.get('/signin', (req, res, err) => {
             console.log("Routes.js post error")
         }else if (user) {
             if (user.checkPassword(password)){
-                res.send(true);
+                res.send(user);
                 return;
             }
             res.send(false);
@@ -41,6 +42,11 @@ router.get('/signin', (req, res, err) => {
             res.json({error: "Sorry, that user is not in our database."})
         }
     })
+})
+
+router.put('/edit', (req, res, err) => {
+    const { username, email } = req.body;
+    User.updateOne({username: username}, {$set : {email : email}})
 })
 
 module.exports = router;

@@ -3,13 +3,14 @@ import {
   Signup,
   Home,
   Nav,
-  Signin
+  Signin,
+  Edit
 } from './components';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
-  console.log(localStorage.getItem('loggedIn'));
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('user') ? true : false);
+  const [currentUser, setCurrentUser] = useState(localStorage.getItem('user') ? localStorage.getItem('user') : null);
   
   return (
     <div >
@@ -18,7 +19,7 @@ function App() {
         <Routes>
           <Route 
             exact path="/" 
-            element={<Home loggedIn={isLoggedIn}/>}
+            element={<Home loggedIn={isLoggedIn} currentUser={currentUser} />}
           />
           <Route 
             path="/signup" 
@@ -26,7 +27,11 @@ function App() {
           />
           <Route 
             path="/signin" 
-            element={<Signin logIn={setIsLoggedIn} />}
+            element={<Signin logIn={setIsLoggedIn} setUser={setCurrentUser}/>}
+          />
+          <Route 
+            path="/edit" 
+            element={<Edit currentUser={currentUser}/>}
           />
         </Routes>
       </BrowserRouter>
