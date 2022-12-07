@@ -9,7 +9,10 @@ export default function Signup(){
         e.preventDefault();
         try{
             const response = await axios.post('/user/signup', {username: username, password: password});
-            console.log(response);
+            localStorage.setItem('user', JSON.stringify(response.data))
+            props.setUser(response.data);
+            props.logIn(true);
+            setRedirect('/');
         }catch(error){
             console.log("Shoot, that didn't work!")
         }

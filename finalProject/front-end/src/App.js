@@ -23,7 +23,7 @@ function App() {
           />
           <Route 
             path="/signup" 
-            element={<Signup />}
+            element={<Signup setUser={setCurrentUser}/>}
           />
           <Route 
             path="/signin" 
