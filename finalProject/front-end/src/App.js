@@ -35,6 +35,9 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
+      <footer style={{marginTop: '15px'}}>
+        https://github.com/Tklaback/cs260/tree/master/finalProject
+      </footer>
     </div>
   );
 }
