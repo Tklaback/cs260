@@ -34,9 +34,10 @@ export default function Friends(props){
         <div className="users">
             <input onChange={(e) => setSearch(e.target.value)} value={search} placeholder="search friends"/>
             {props.friends && props.friends.filter(word => word.username.includes(search)).map((el) => (
-                <div key={el._id}>
+                <div key={el._id} className="user">
                     <button onClick={(e) => removeFriend(el)}>remove</button>
-                    <p >{el.username}</p>
+                    <h4>{el.username}</h4>
+                    <p>{el.firstName ? el.firstName[0].toUpperCase() + el.firstName.substring(1,) : ''} {el.lastName ? el.lastName[0].toUpperCase() + el.lastName.substring(1,) : ''}</p>
                 </div >
             ))}
         </div>

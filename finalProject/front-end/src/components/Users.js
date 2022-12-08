@@ -31,14 +31,15 @@ export default function Users(props){
     }
 
     function inFriends(username){
-        
-        for (let friendObject of props.friends){
-            if(friendObject.username === username){
-                return true;
+        if (props.friends){
+            for (let friendObject of props.friends){
+                if(friendObject.username === username){
+                    return true;
+                }
             }
+            return false;
         }
         return false;
-        
     }
 
     return (
@@ -51,8 +52,7 @@ export default function Users(props){
                         <button onClick={(e) => addFriend(el)}>add</button>
                         <div className="user">
                             <h4>{el.username}</h4>
-                            <p>{el.firstName ? el.firstName[0].toUpperCase() + el.firstName.substring(1,) : ''}</p>
-                            <p>{el.lastName ? el.lastName[0].toUpperCase() + el.lastName.substring(1,) : ''}</p>
+                            <p>{el.firstName ? el.firstName[0].toUpperCase() + el.firstName.substring(1,) : ''} {el.lastName ? el.lastName[0].toUpperCase() + el.lastName.substring(1,) : ''}</p>
                         </div>
                     </>
                     }

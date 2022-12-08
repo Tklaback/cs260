@@ -30,7 +30,7 @@ export default function Home(props){
     if (props.loggedIn){
         return (
             <div className="main">
-                <div>
+                <div class="user">
                     <h1>Welcome Back {userObject.firstName ? 
                         userObject.firstName[0].toUpperCase() +  userObject.firstName.substring(1,): userObject.username}!
                     </h1>

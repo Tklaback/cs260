@@ -1,5 +1,6 @@
 .main{
-    border: 1px solid red;
+    border: 1px solid #f322;
+    margin: 15px;
     display: flex;
     justify-content: space-between;
 }
@@ -14,4 +15,18 @@
 .user{
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    border: 2px solid gray;
+    box-shadow: 10px 5px lightblue;
+}
+
+.nav-bar{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    background-color: #4453;
+}
+
+.nav-bar, button {
+    color: red;
 }
